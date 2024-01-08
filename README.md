@@ -26,3 +26,23 @@
 
 ### 6단계: 결과 분석 및 시각화
 마지막으로, 모델의 예측 결과를 분석하고 시각화하여 모델의 성능을 이해합니다. 이는 오분류된 샘 분석, 혼동 행렬 시각화 등을 통해 이루어질 수 있습니다.
+
+
+
+# 코드 해석
+
+from sklearn.datasets import load_iris : sklearn 라이브러리에서 제공하는 아이리스 데이터셋을 불러오는 코드입니다.
+iris = load_iris() : 아이리스 데이터셋을 로드하고, 그 결과를 iris 변수에 저장합니다.
+print(iris.keys()) : 아이리스 데이터셋의 구성 요소를 확인하는 코드입니다. 데이터셋은 딕셔너리 형태로 제공되며, 이 코드를 통해 어떤 키가 있는지 확인합니다.
+print(iris['data']) : 아이리스 데이터셋의 특성 데이터를 출력하는 코드입니다. 이 데이터는 꽃잎과 꽃받침의 길이와 너비를 나타냅니다.
+print(iris['target']) : 아이리스 데이터셋의 타깃 값을 출력하는 코드입니다. 이 값은 각 꽃이 어떤 종류에 속하는지를 나타냅니다.
+print(iris['target_names']) : 아이리스 데이터셋의 타깃의 이름을 출력하는 코드입니다. 이 값은 각 꽃의 종류의 이름을 나타냅니다.
+print(iris['feature_names']) : 아이리스 데이터셋의 특성의 이름을 출력하는 코드입니다. 이 값은 각 특성이 무엇을 나타내는지를 설명합니다.
+df = pd.DataFrame(iris['data'], columns=iris['feature_names']) : 아이리스 데이터셋의 특성 데이터를 이용해 데이터프레임을 생성하고, 특성의 이름을 컬럼 이름으로 설정합니다.
+df['target'] = iris['target'] : 생성한 데이터프레임에 타깃 값을 추가합니다.
+X_train, X_test, y_train, y_test = train_test_split(iris['data'], iris['target'], test_size=0.2, random_state=42) : 데이터를 훈련 세트와 테스트 세트로 나눕니다. 테스트 세트의 크기는 전체의 20%입니다.
+model = LogisticRegression(max_iter=200) : 로지스틱 회귀 모델을 생성합니다. 최대 반복 횟수는 200번입니다.
+model.fit(X_train, y_train) : 로지스틱 회귀 모델을 훈련 세트로 학습시킵니다.
+predictions = model.predict(X_test) : 학습한 모델을 이용해 테스트 세트의 결과를 예측합니다.
+accuracy = accuracy_score(y_test, predictions) : 예측 결과와 실제 타깃 값을 비교해 정확도를 계산합니다.
+print("Accuracy: ", accuracy) : 계산한 정확도를 출력합니다.
